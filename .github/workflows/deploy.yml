@@ -1,9 +1,8 @@
-name: Deploy static site
+name: Deploy to GitHub Pages
 
 on:
   push:
-    branches:
-      - main
+    branches: ["main"]
   workflow_dispatch:
 
 permissions:
@@ -19,38 +18,23 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm
+          cache: "npm"
+          cache-dependency-path: package-lock.json
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Determine Vite base path
-        id: base-path
-        run: |
-          owner="${GITHUB_REPOSITORY%/*}"
-          if [[ "${GITHUB_REPOSITORY}" == "${owner}/${owner}.github.io" ]]; then
-            echo "value=/" >> "${GITHUB_OUTPUT}"
-          else
-            repo_name="${GITHUB_REPOSITORY#*/}"
-            echo "value=/${repo_name}/" >> "${GITHUB_OUTPUT}"
-          fi
-
       - name: Build site
-        env:
-          BASE_PATH: ${{ steps.base-path.outputs.value }}
         run: npm run build
 
-      - name: Configure GitHub Pages
-        uses: actions/configure-pages@v4
-
-      - name: Upload Pages artifact
+      - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: dist
