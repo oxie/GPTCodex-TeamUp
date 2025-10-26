@@ -20,6 +20,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { z } from "zod";
+import { resumeUrl } from "@/lib/resume";
 
 const extendedMessageSchema = insertMessageSchema.extend({
   company: z.string().optional(),
@@ -95,7 +96,7 @@ Project Timeline: ${projectTimeline || "Not specified"}
       details: "GenOps Engineer & AI Infrastructure Specialist",
       action: {
         text: "View Resume",
-        url: "/assets/ValentinPetrov-CV-last-2024-3.pdf"
+        url: resumeUrl
       }
     },
     {
