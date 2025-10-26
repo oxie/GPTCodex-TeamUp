@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { cvData } from "@/lib/cv-data";
+import { resumeUrl } from "@/lib/resume";
 import { CheckCircle } from "lucide-react";
 
 const About = () => {
@@ -47,7 +48,7 @@ const About = () => {
                     Contact Me
                   </Button>
                 </a>
-                <a href="/assets/ValentinPetrov-CV-last-2024-3.pdf" target="_blank" rel="noopener noreferrer">
+                <a href={resumeUrl} target="_blank" rel="noopener noreferrer">
                   <Button variant="outline">
                     View Full CV
                   </Button>
